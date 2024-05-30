@@ -18,20 +18,19 @@ it('approach1', () => {
 })
 
 it('approach2', () => {
-    cy.visit("https://the-internet.herokuapp.com/windows");
+    cy.visit("https://the-internet.herokuapp.com/windows"); //parent tab
     
-    cy.get(".example >a").then()
-
+    cy.get(".example >a").then((e)=> {
+        let url = e.prop('href');
+        cy.visit(url);
+    })
+    
     cy.url().should('include', 'https://the-internet.herokuapp.com/windows/new');
-    
-    // cy.get('.elementor-element-067aa78 > .elementor-widget-container > .elementor-heading-title').should('have.value', 'The Sprout Advantage');
-    // cy.get(".elementor-widget[data-id='067aa78'] h2").should('have.value', 'The Sprout Advantage');
-
-    //opratinos
     cy.wait(5000);
 
-    cy.go('back')
-    
+    cy.go('back');
+
+    //Limitation Domaing should match
 })
 
 })
