@@ -10,7 +10,7 @@ describe('web table', () => {
         cy.get(".home-page-first-container-title").contains("Sprout") //using class name
         cy.get('.header--nav').last().click();
         cy.wait(10000);
-        cy.get(".job-title-tab").click();
+        cy.get(".job-title-tab").click(); // job title tab from Overview tab
     })
 
 
@@ -53,10 +53,11 @@ describe('web table', () => {
             cy.log("Total Nubmer of pages>>"+totalPages);
 
             for(let p=1; p<=totalPages;p++){
+                let jobTitle;
                 if(totalPages>1){
                     cy.log("Active Page is ==>"+p);
                     // .current-page.d-flex.align-items-center>svg:nth-child(6)
-                    cy.get("table[class='salary-review-table mt-3']>tbody>tr")
+                    jobTitle = cy.get("table[class='salary-review-table mt-3']>tbody>tr")
                     .each (($row, index, $rows)=>{
                         cy.wrap($row).within(()=>{
                             cy.get("td:nth-child(2)").then((e)=>{
@@ -65,7 +66,12 @@ describe('web table', () => {
                     })
 
                 })
+                if(jobTitle!='AFTER SALES MANAGER'){
                 cy.get(".current-page.d-flex.align-items-center>svg:nth-child(6)").click()
+                cy.wait(2000);
+                } else{
+                    assert.equal(jobTitle,'AFTER SALES MANAGER');
+                }
             }
         }
 
