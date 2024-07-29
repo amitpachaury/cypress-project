@@ -6,8 +6,12 @@ describe("file handling", ()=>{
         cy.visit('https://benchmark-qa.sprout.ph/');
         cy.viewport('macbook-15')
         cy.get("#header_login_btn").click() //id
-        cy.get("[name='username']").type("apachaury+testadmin@sprout.ph") // using attribute
-        cy.get("input.salary-benchmark-input[name='password']").type("Amit@1234") // with tag.className[attribute]
+        cy.fixture('benchmarkCredentials').then((data) =>{
+            cy.get("[name='username']").type(data.username); // using attribute
+            cy.get("input.salary-benchmark-input[name='password']").type(data.password); 
+        })
+        // cy.get("[name='username']").type("apachaury+testadmin@sprout.ph") // using attribute
+        // cy.get("input.salary-benchmark-input[name='password']").type("Amit@1234") // with tag.className[attribute]
         cy.get(".salary-benchmark-primary-button[name='login']").click()
         cy.get(".home-page-first-container-title").contains("Sprout") //using class name
         cy.get('.header--nav').last().click();
