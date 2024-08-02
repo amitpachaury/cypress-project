@@ -60,3 +60,24 @@ Cypress.Commands.add('generateRandomString', (length) => {
     return cy.wrap(result);
 });
 
+        
+
+Cypress.Commands.add('selectDropdown', (selector, dropdownSelector ) => {
+//.SBR-industry-select
+    cy.get(selector).click();
+    // cy.contains(label).parent().within(() =>{
+    //     cy.get('.form-check-input').click();
+    // })
+    // cy.get("input[placeholder]").type("Financial and Insurance Activities");
+    // cy.get(".dropdown-content-container>div>.dropdown-selection").click();
+    // .select-option-group industry
+    // .dropdown-selection location
+    cy.get(dropdownSelector)
+            .its('length')
+            .then((len) => {
+        cy.get(dropdownSelector)
+            .eq(Math.floor(Math.random() * ((len-1) - 0 + 1)) + 0)
+            .click();
+    })
+
+})
