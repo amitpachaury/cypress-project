@@ -24,7 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-/// <reference types = "Cypress" />
+// <reference types = "Cypress" />
 
 Cypress.Commands.add('getIframe', (iframe)=>{
     return cy.get(iframe)
@@ -33,3 +33,30 @@ Cypress.Commands.add('getIframe', (iframe)=>{
     .then(cy.wrap);
 
 })
+
+// Custom command for the clicking on link using label
+
+Cypress.Commands.add('clickJobRoles', (label)=>{
+    
+    cy.contains(new RegExp("^" + label + "$", "g"), {matchCase: false}).parent().within(() =>{
+        cy.get('.job-role--hover-icon').trigger("mouseover", {force: true}).click();
+    })
+})
+
+Cypress.Commands.add('clickJobFunctions', (label)=>{
+    
+    cy.contains(label).parent().within(() =>{
+        cy.get('.action').trigger("mouseover", {force: true}).click();
+    })
+})
+
+Cypress.Commands.add('generateRandomString', (length) => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return cy.wrap(result);
+});
+
