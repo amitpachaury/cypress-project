@@ -1,6 +1,6 @@
 describe("customCommands", () => {
 
-    it("handling links", () => {
+    it.skip("handling links", () => {
         cy.visit('https://benchmark-qa.sprout.ph/');
         cy.viewport('macbook-15')
         cy.get("#header_login_btn").click() //id
@@ -30,7 +30,7 @@ describe("customCommands", () => {
 
     })
 
-    it.only("handling dropdown From Salary Report Page", () => {
+    it.skip("handling dropdown From Salary Report Page", () => {
         cy.visit('https://benchmark-qa.sprout.ph/');
         cy.viewport('macbook-15')
         cy.get("#header_login_btn").click() //id
@@ -69,6 +69,14 @@ describe("customCommands", () => {
 
         cy.selectDropdown(".dropdown",".dropdown-selection").should('be.visible');
         cy.get(".SBR-job-title").click();
+
+    });
+
+    it.only("Login customCommand", () =>{
+        cy.visit('https://benchmark-qa.sprout.ph/');
+        cy.loginBenchmark();
+        // cy.get("#header_dropdown_toggle").should('have.text', "Test Admin");
+
 
     })
 

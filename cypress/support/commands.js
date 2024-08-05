@@ -26,27 +26,27 @@
 
 // <reference types = "Cypress" />
 
-Cypress.Commands.add('getIframe', (iframe)=>{
+Cypress.Commands.add('getIframe', (iframe) => {
     return cy.get(iframe)
-    .its('0.contentDocument.body')
-    .should('be.visible')
-    .then(cy.wrap);
+        .its('0.contentDocument.body')
+        .should('be.visible')
+        .then(cy.wrap);
 
 })
 
 // Custom command for the clicking on link using label
 
-Cypress.Commands.add('clickJobRoles', (label)=>{
-    
-    cy.contains(new RegExp("^" + label + "$", "g"), {matchCase: false}).parent().within(() =>{
-        cy.get('.job-role--hover-icon').trigger("mouseover", {force: true}).click();
+Cypress.Commands.add('clickJobRoles', (label) => {
+
+    cy.contains(new RegExp("^" + label + "$", "g"), { matchCase: false }).parent().within(() => {
+        cy.get('.job-role--hover-icon').trigger("mouseover", { force: true }).click();
     })
 })
 
-Cypress.Commands.add('clickJobFunctions', (label)=>{
-    
-    cy.contains(label).parent().within(() =>{
-        cy.get('.action').trigger("mouseover", {force: true}).click();
+Cypress.Commands.add('clickJobFunctions', (label) => {
+
+    cy.contains(label).parent().within(() => {
+        cy.get('.action').trigger("mouseover", { force: true }).click();
     })
 })
 
@@ -60,10 +60,10 @@ Cypress.Commands.add('generateRandomString', (length) => {
     return cy.wrap(result);
 });
 
-        
 
-Cypress.Commands.add('selectDropdown', (selector, dropdownSelector ) => {
-//.SBR-industry-select
+
+Cypress.Commands.add('selectDropdown', (selector, dropdownSelector) => {
+    //.SBR-industry-select
     cy.get(selector).click();
     // cy.contains(label).parent().within(() =>{
     //     cy.get('.form-check-input').click();
@@ -73,11 +73,37 @@ Cypress.Commands.add('selectDropdown', (selector, dropdownSelector ) => {
     // .select-option-group industry
     // .dropdown-selection location
     cy.get(dropdownSelector)
-            .its('length')
-            .then((len) => {
-        cy.get(dropdownSelector)
-            .eq(Math.floor(Math.random() * ((len-1) - 0 + 1)) + 0)
-            .click();
-    })
+        .its('length')
+        .then((len) => {
+            cy.get(dropdownSelector)
+                .eq(Math.floor(Math.random() * ((len - 1) - 0 + 1)) + 0)
+                .click();
+        });
 
+})
+
+//custom command for login
+
+// Cypress.Commands.add('loginBenchmark', (email, password) => {
+//     cy.get("#header_login_btn").click();
+//     // cy.fixture('credentials').then((data) =>{
+//     //     cy.get("[name='username']").type(data.username); // using attribute
+//     //     cy.get("input.salary-benchmark-input[name='password']").type(data.password);
+//     //     cy.get(".salary-benchmark-primary-button[name='login']").click();
+//     //     cy.get("#header_dropdown_toggle").should('have.text', userdata.userProfileName);
+//     // }) 
+//     cy.get("[name='username']").type(email); // using attribute
+//     cy.get("input.salary-benchmark-input[name='password']").type(password);
+//     cy.get(".salary-benchmark-primary-button[name='login']").click();
+
+// })
+
+Cypress.Commands.add('loginBenchmark', () => {
+    cy.get("#header_login_btn").click();
+    cy.fixture('credentials').then((data) => {
+        cy.get("[name='username']").type(data.username); // using attribute
+        cy.get("input.salary-benchmark-input[name='password']").type(data.password);
+        cy.get(".salary-benchmark-primary-button[name='login']").click();
+        cy.get("#header_dropdown_toggle").should('have.text', data.userProfileName);
+    })
 })
